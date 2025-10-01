@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="x-ua-compatible" content="ie=edge">
+   <title> Contact Us </title>
+   <meta name="theme-color" content="#264d8b">
+   <meta name="description" content=" " />
+   <meta name="keywords" content=" " />
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="robots" content="max-image-preview:standard">
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+   
+   <main>
+   
+      <section class="tp-contact-area py-5">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-6">
+                  <div class="tp-contact-form p-0 ">
+                     
+                     <form id="home-form" action="./assets/sendmail.php" method="POST" autocomplete="off">
+                        <div class="row g-3 tp-gx-10">
+                           <div class="col-md-6">
+                              <div class="tp-contact-input">
+                                 <input name="name" type="text" class="form-control" placeholder="Your Name*" required>
+                              </div>
+                           </div>
+
+                           <div class="col-md-6">
+                              <div class="tp-contact-input">
+                                 <input name="email" type="email" class="form-control" placeholder="Email Address*"  required>
+                              </div>
+                           </div>
+
+                           <div class="col-md-6">
+                              <div class="tp-contact-input">
+                                 <input name="phone" type="text" class="form-control" placeholder="Phone Number">
+                              </div>
+                           </div>
+
+                           <div class="col-md-12">
+                              <div class="tp-contact-input">
+                                 <textarea name="message" class="form-control"
+                                    placeholder="Enter Your Message here"></textarea>
+                              </div>
+                           </div>
+
+                           <div class="tp-contact-btn mt-10">
+                              <button type="submit" class="tp-btn" name="submit">Send Message</button>
+                           </div>
+
+                        </div>
+                        <p class="ajax-response mt-3"></p>
+                     </form>
+
+                  </div>
+               </div>
+
+            </div>
+         </div>
+      </section>
+
+   </main>
+
+   <script>
+      $(document).ready(function () {
+         $("form").on("submit", function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            var formData = $(this).serialize(); // Serialize form data
+            var formId = $(this).attr("id"); // Get form ID for response
+
+            $.ajax({
+               type: "POST",
+               url: $(this).attr("action"),
+               data: formData,
+               success: function (response) {
+                  $("#" + formId + " .ajax-response").text(response); // Display response message
+                  $("#" + formId)[0].reset(); // Reset the form
+               },
+               error: function () {
+                  $("#" + formId + " .ajax-response").text("An error occurred. Please try again.");
+               }
+            });
+         });
+      });
+   </script>
+</body>
+</html>
